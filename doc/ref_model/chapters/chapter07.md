@@ -49,7 +49,7 @@
 <a name="7.1"></a>
 ## 7.1 Introduction
 
-This document includes process flow, logistics, and requirements which must be satisfied to ensure Virtualized Network Functions (VNFs) meet the design, feature, and capability expectations of VNF consumers to deliver NFV promoting the use and scalability of SDN capabilities. This chapter captures the core fundamentals and steps needed to certify VNFs on target NFVi frameworks and architectures which drives more work into the community, resulting in pre-certified VNFs on core capabilities ultimately reducing the amount of time and cost it takes each operator to on-board and maintain vendor provided VNFs.
+This document includes process flow, logistics, and requirements which must be satisfied to ensure Virtualized Network Functions (VNFs) meet the design, feature, and capability expectations of VNF consumers to deliver NFV promoting the use and scalability of Software Defined Network (SDN) capabilities. This chapter captures the core fundamentals and steps needed to certify VNFs on target NFV instances (NFVi) frameworks and architectures which drives more work into the community, resulting in pre-certified VNFs on core capabilities ultimately reducing the amount of time and cost it takes each operator to on-board and maintain vendor provided VNFs.
 
 <p align="center"><img src="../figures/ch10_ref_model_lfn.png" alt="scope" title="Scope" width="100%"/></p>
 <p align="center"><b>Figure 8-1:</b> CNTT relation to LFN OVP</p>
@@ -93,6 +93,10 @@ Standards organizations with recommendations and best practices, and certificati
  • The National Institute of Standards and Technology (NIST) (US Only)
 
  • FedRAMP Certification https://www.fedramp.gov/ (US Only)
+ 
+ * 3rd Generation Partnership Project (3GPP) Security Specifications, https://www.3gpp.org/DynaReport/33-series.htm. In partiuclar, TR 33.818, Security Assurance Methodology (SECAM) and Security Assurance Specification (SCAS) for 3GPP virtualized network products
+ 
+ * ETSI NFV Security, https://www.etsi.org/standards-search#page=1&search=&title=1&etsiNumber=1&content=1&version=1&onApproval=1&published=1&historical=1&startDate=1988-01-15&endDate=2019-11-01&harmonized=0&keyword=&TB=799&stdType=&frequency=&mandate=&collection=&sort=3
 
  • ETSI Cyber Security Technical Committee (TC CYBER) - https://www.etsi.org/committee/cyber
 
@@ -120,7 +124,7 @@ Additional NFVI security principles that need to be incorporated:
 
 <a name="7.3.1"></a>
 ## 7.3.1 Potential attack vectors.
-Previously attacks designed to place and migrate workload outside the legal boundaries were not possible using traditional infrastructure, due to the closed nature of these systems. However, using NFVI, violation of regulatory policies and laws becomes possible by actors diverting or moving a VNF from an authenticated and legal location to another potentially illegal location. The consequences of violating regulatory policies may take the form of a complete banning of service and/or an exertion of a financial penalty by a governmental agency or through SLA enforcement.  Such vectors of attack may well be the original intention of the attacker in an effort to harm the service provider. One possible attack scenario can be when an attacker exploits the insecure VNF API to dump the records of personal data from the database in an attempt to violate user privacy. NFVI operators should ensure that VNF APIs are secure, accessible over a secure network (TLS) under very strict set of security best practices and RBAC policies to limit exposure of this vulnerability.
+Previously attacks designed to place and migrate workload outside the legal boundaries were not possible using traditional infrastructure, due to the closed nature of these systems. However, using NFVI, violation of regulatory policies and laws becomes possible by actors diverting or moving a VNF from an authenticated and legal location to another potentially illegal location. The consequences of violating regulatory policies may take the form of a complete banning of service and/or an exertion of a financial penalty by a governmental agency or through Service Level Agreement (SLA) enforcement.  Such vectors of attack may well be the original intention of the attacker in an effort to harm the service provider. One possible attack scenario can be when an attacker exploits the insecure VNF API to dump the records of personal data from the database in an attempt to violate user privacy. NFVI operators should ensure that VNF APIs are secure, accessible over a secure network (TLS) under very strict set of security best practices and RBAC policies to limit exposure of this vulnerability.
 
 <a name="7.3.2"></a>
 ## 7.3.2 Testing demarcation points.
@@ -137,7 +141,7 @@ It is not enough to just secure all potential points of entry and hope for the b
 
     o VULCAN: Vulnerability Assessment Framework for Cloud Computing (NIST)
 
-• Penetration Testing Framework
+• Penetration Testing Framework customized to telecommunication API and protocols
 
 • Information Systems Security Assessment Framework (ISSAF)
 
@@ -207,9 +211,12 @@ At a high level, the following areas/requirements cover workload security for a 
 
     *(An overview/introduction to workload certification requirements and
     incl types of workloads covered)*
+    This is part of 3GPP and also handled in GSMA
 
 <a name="7.5"></a>
 ## 7.5 Platform Security
+
+?What is a platform in this context?
 
 <a name="7.5.1"></a>
 ## 7.5.1 Platform Security
@@ -284,6 +291,7 @@ The high-level functions of these different access controls are described below:
 
     *(Security requirements for any services that are hosted externally, but
     leveraged or consumed within the local VIM environment)*
+    *Are NEP interface security meant here or remote hosting?*
 
 -   Data at rest
 
@@ -489,6 +497,7 @@ The high-level functions of these different access controls are described below:
             classification, communication, and timely resolution of
             security vulnerabilities (i.e.; bug bounty, Penetration
             testing/scan findings, etc)
+Software hardening should take as a baseline the 3GPP SCAS and GSMA NESAS specifications. In addition, specific tools might be used e.g. for creative fuzzing or application specific scenarios. Specific requirements might be imposed by local government.
 
 <a name="7.7.2"></a>
 ### 7.7.2 Port Protection
@@ -519,6 +528,7 @@ The high-level functions of these different access controls are described below:
                 -   Security event logging (All security events should
                     be logged, including informational)
                 -   Privilege escalation detection
+                This seems more operational security i.e. operator responsiblity, same  with the next. This is currently under vendor section.
 
   <a name="7.7.5"></a>
 ### 7.7.5 Logging
@@ -535,10 +545,13 @@ The high-level functions of these different access controls are described below:
 <a name="7.7.7"></a>
 ### 7.7.7 Identity and Access Management
 
+This is operational security and part of the operators responsibility.
+
 <a name="7.7.8"></a>
 ### 7.7.8 CVEs and Vulnerability Management
                 -   Security defect reporting
                 -   Cadence with NFVi vendors (OSSA for OpenStack)
+                GSMA has a CVE reporting for telco
 
 <a name="7.7.9"></a>
 ### 7.7.9 Encryption suite support
@@ -563,6 +576,8 @@ The high-level functions of these different access controls are described below:
 The Operator’s responsibility is to not only make sure that security is included in all the vendor supplied infrastructure and NFV components, but it is also responsible for the maintenance of the security functions from an operational and management perspective.   This includes but is not limited to securing the following elements:
 
 • Maintaining standard security operational management methods and processes
+
+Configuring also belongs here, as only the operator knows what kind of contract it has with others.
 
 • Monitoring and reporting functions
 
